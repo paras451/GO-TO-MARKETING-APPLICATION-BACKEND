@@ -15,6 +15,9 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 # password:Market@14
 # gmail:paras@gmail.com
 
+from urllib.parse import parse_qsl, urlparse
+import dj_database_url
+
 import os
 from dotenv import load_dotenv
 
@@ -103,16 +106,30 @@ WSGI_APPLICATION = "gotomarketappbackend.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+tmpPostgres = urlparse(os.getenv("DATABASE_URL"))
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "gotomarketdb",
-        "USER": "postgres",
-        "PASSWORD": "Pahadi@01",
-        "HOST": "localhost",
-        "PORT": "5432",
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': tmpPostgres.path.replace('/', ''),
+        'USER': tmpPostgres.username,
+        'PASSWORD': tmpPostgres.password,
+        'HOST': tmpPostgres.hostname,
+        'PORT': 5432,
+        'OPTIONS': dict(parse_qsl(tmpPostgres.query)),
     }
 }
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "gotomarketdb",
+#         "USER": "postgres",
+#         "PASSWORD": "Pahadi@01",
+#         "HOST": "localhost",
+#         "PORT": "5432",
+#     }
+# }
 
 
 # Password validation
