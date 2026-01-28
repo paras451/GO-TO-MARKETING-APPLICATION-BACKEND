@@ -39,7 +39,7 @@ SECRET_KEY = "django-insecure-1lu*@w#0bgaj8zx84n)*z7=h0t1c3-_-v46f2d+)#kac-u6(zw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["https://go-to-marketing-application-fronten.vercel.app/",'localhost', '127.0.0.1']
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -73,6 +73,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "https://go-to-marketing-application-fronten.vercel.app/"
     "http://127.0.0.1:3000",
 ]  # for development
 
