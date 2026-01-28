@@ -15,7 +15,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 # password:Market@14
 # gmail:paras@gmail.com
 
-from urllib.parse import parse_qsl, urlparse
+
 import dj_database_url
 
 import os
@@ -106,19 +106,14 @@ WSGI_APPLICATION = "gotomarketappbackend.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-tmpPostgres = urlparse(os.getenv("DATABASE_URL"))
+
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': tmpPostgres.path.replace('/', ''),
-        'USER': tmpPostgres.username,
-        'PASSWORD': tmpPostgres.password,
-        'HOST': tmpPostgres.hostname,
-        'PORT': 5432,
-        'OPTIONS': dict(parse_qsl(tmpPostgres.query)),
-        'sslmode': 'require',
-    }
+    "default": dj_database_url.config(
+        default=os.getenv("DATABASE_URL"),
+        conn_max_age=600,
+        ssl_require=True,
+    )
 }
 
 # DATABASES = {
