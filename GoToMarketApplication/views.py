@@ -128,7 +128,7 @@ At the END, provide a **clear summary table** with the following columns:
 """
 
     try:
-        model = genai.GenerativeModel("gemini-2.0-flash")
+        model = genai.GenerativeModel("gemini-2.5-flash-lite")
         response = model.generate_content(final_prompt)
 
         if response.text:
