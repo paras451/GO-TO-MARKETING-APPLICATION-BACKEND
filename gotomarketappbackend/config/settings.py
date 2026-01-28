@@ -73,7 +73,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    "https://go-to-marketing-application-fronten.vercel.app/",
+    "https://go-to-marketing-application-fronten.vercel.app",
     "http://127.0.0.1:3000",
 ]  # for development
 
