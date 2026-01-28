@@ -137,8 +137,37 @@ At the END, provide a **clear summary table** with the following columns:
             return Response({"plan": response.text})
 
     except Exception as e:
-        print(f"DEBUG ERROR: {str(e)}")
-        return Response({"error": str(e)}, status=500)
+        error_message = str(e)
+        print("DEBUG ERROR:", error_message)
+
+    # Quota / rate limit error
+    if "429" in error_message or "quota" in error_message.lower():
+        return Response(
+            {
+                "error": "Too many requests 🚦 Please try again after some time."
+            },
+            status=429
+        )
+
+    # Timeout or network issue
+    if "timeout" in error_message.lower():
+        return Response(
+            {
+                "error": "AI service is slow right now. Please try again."
+            },
+            status=504
+        )
+
+    # Generic fallback (safe for production)
+    return Response(
+        {
+            "error": "Something went wrong on our side. Please try later."
+        },
+        status=500
+    )
+    # except Exception as e:
+    #     print(f"DEBUG ERROR: {str(e)}")
+    #     return Response({"error": str(e)}, status=500)
 
 
 @api_view(["POST"])
