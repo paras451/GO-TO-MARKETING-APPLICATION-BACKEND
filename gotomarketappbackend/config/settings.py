@@ -83,7 +83,7 @@ CORS_ALLOWED_HEADERS = [
     # "user-agent",
 ]
 
-ROOT_URLCONF = "gotomarketappbackend.urls"
+ROOT_URLCONF = "gotomarketappbackend.config.urls"
 
 TEMPLATES = [
     {
@@ -100,7 +100,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "gotomarketappbackend.wsgi.application"
+WSGI_APPLICATION = "gotomarketappbackend.config.wsgi.application"
 
 
 # Database
