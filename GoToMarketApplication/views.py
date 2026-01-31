@@ -1,4 +1,4 @@
-import google.generativeai as genai
+from openai import OpenAI
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.views.decorators.csrf import csrf_exempt
@@ -10,7 +10,8 @@ from rest_framework import status
 
 import os
 
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 
 @api_view(["POST"])
@@ -98,6 +99,7 @@ The plan MUST include clearly separated sections with headings and bullet points
 
 ==== FINAL SUMMARY TABLE (IMPORTANT) ====
 
+
 At the END, provide a **clear summary table** with the following columns:
 
 | Aspect | Details |
@@ -128,13 +130,16 @@ At the END, provide a **clear summary table** with the following columns:
 """
 
     try:
-        model = genai.GenerativeModel("gemini-2.5-flash-lite")
-        response = model.generate_content(final_prompt)
+        response = client.responses.create(
+        model="gpt-5-mini",   
+        input=final_prompt
+        )
+        output_text = response.output_text
 
-        if response.text:
-            return Response({"plan": response.text})
+        if response.output_text:
+            return Response({"plan": response.output_text})
         else:
-            return Response({"plan": response.text})
+            return Response({"plan": response.output_text})
 
     except Exception as e:
         error_message = str(e)
