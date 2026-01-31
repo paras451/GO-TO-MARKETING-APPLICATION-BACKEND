@@ -131,7 +131,7 @@ At the END, provide a **clear summary table** with the following columns:
 
     try:
         response = client.responses.create(
-        model="gpt-4o",   
+        model="gpt-5.1",   
         input=final_prompt
         )
         output_text = response.output_text
