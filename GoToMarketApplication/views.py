@@ -125,7 +125,7 @@ Ensure the response is complete and does not stop early.
 
     try:
         response = client.responses.create(
-        model="gpt-5-mini",   
+        model="gpt-5-nano",   
         input=final_prompt,
         max_output_tokens=4000
         )
