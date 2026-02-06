@@ -19,88 +19,94 @@ def generate_marketing_plan(request):
     data = request.data
 
     final_prompt = f"""
-You are a senior go-to-market and digital marketing strategist.
+You are a senior Go-To-Market and Digital Marketing Strategist.
 
-IMPORTANT:
-You MUST start your response by REPEATING the provided business details
-exactly in a clearly formatted section before giving any strategy.
+TASK:
+Create a COMPLETE Go-To-Market and Digital Marketing Plan covering ALL sections.
+Keep the response highly condensed.
+Each section must have short bullet points (5–6 bullets max).
+Do not exceed ~600 words total.
 
-Do not use emojis.
+IMPORTANT RULES:
+• First, repeat ALL provided business details exactly in a clearly formatted section.
+• Then provide strategy.
+• No emojis.
+• Use markdown.
+• Write All heading in bold.
+• Do not write long paragraphs.
+• Each point must be on a new line.
+• Do not merge sections.
 
-===== BUSINESS OVERVIEW ====
+====
+BUSINESS DETAILS
 
-• Business Name: {data.get('category')}
-• Business Type: {data.get('subCategory')}
-• Category: {data.get('category')}
-• Sub-Category / Niche: {data.get('subCategory')}
-• Target Audience: {data.get('targetAudience')}
-• Location / Market: {data.get('location')}
+Business Name: {data.get('category')}
+Business Type: {data.get('subCategory')}
+Category: {data.get('category')}
+Sub-Category / Niche: {data.get('subCategory')}
+Target Audience: {data.get('targetAudience')}
+Location / Market: {data.get('location')}
 
-==== ONLINE PRESENCE ====
+Website Available: {data.get('hasWebsite')}
+Website URL/Name: {data.get('websiteUrl') if data.get('hasWebsite') == 'yes' else 'Not available'}
 
-• Website Available: {data.get('hasWebsite')}
-• Website URL/Name: {data.get('websiteUrl') if data.get('hasWebsite') == 'yes' else 'Not available'}
+Mobile App Available: {data.get('hasApp')}
+App Name: {data.get('appName') if data.get('hasApp') == 'yes' else 'Not available'}
 
-• Mobile App Available: {data.get('hasApp')}
-• App Name: {data.get('appName') if data.get('hasApp') == 'yes' else 'Not available'}
+Primary Goal: {data.get('businessGoal')}
+Trademark Registered: {data.get('trademark')}
+Idea Status: {data.get('ideaStatus')}
+Patent Available: {data.get('hasPatent')}
 
-==== BUSINESS STRATEGY ====
+====================
+PLAN STRUCTURE
+====================
 
-• Primary Goal: {data.get('businessGoal')}
-• Trademark Registered: {data.get('trademark')}
-• Idea Status: {data.get('ideaStatus')}
-• Patent Available: {data.get('hasPatent')}
-
-Create a **complete, actionable Go-To-Market and Digital Marketing Plan**.
-
-The plan MUST include clearly separated sections with headings and bullet points:
-
-### 1️⃣ Go-To-Market Strategy
+### 1. Go-To-Market Strategy
 • Market positioning  
 • Unique value proposition  
-• Launch & growth approach  
+• Launch and growth approach  
 
-### 2️⃣ SEO Strategy
-**On-Page SEO**
+### 2. SEO Strategy
+On-Page SEO:
 • Keyword strategy  
 • Website optimization  
 
-**Off-Page SEO**
+Off-Page SEO:
 • Backlinks  
 • Authority building  
 
-### 3️⃣ Content Strategy
-• Blog ideas  
+### 3. Content Strategy
+• Blog content ideas  
 • Social media content  
-• Video & reels ideas  
+• Video and short-form ideas  
 
-### 4️⃣ Paid Advertising (PPC)
+### 4. Paid Advertising (PPC)
 • Google Ads strategy  
-• Social media ads  
+• Social media advertising  
 • Budget allocation logic  
 
-### 5️⃣ Recommended Tools
+### 5. Recommended Tools
 • SEO tools  
-• Content & editing tools  
-• Analytics tools  
+• Content and design tools  
+• Analytics and tracking tools  
 
-### 6️⃣ Website / App Recommendations
-• If website/app is missing, suggest what to build  
-• UX & conversion tips  
+### 6. Website / App Recommendations
+• What to build if missing  
+• UX and conversion optimization  
 
-### 7️⃣ 3–6 Month Growth Roadmap
-• Month-wise plan  
+### 7. 3–6 Month Growth Roadmap
+• Month-wise action plan  
 • Key KPIs to track  
 
-### Suggest Target Audience Segments
-• Based on business type and location
-• Demographics, interests, behaviors
+### Target Audience Segments
+• Segments based on business and location  
+• Demographics, interests, behaviors  
 
+====
+FINAL SUMMARY TABLE
 
-==== FINAL SUMMARY TABLE (IMPORTANT) ====
-
-
-At the END, provide a **clear summary table** with the following columns:
+Provide a summary table at the end:
 
 | Aspect | Details |
 |------|--------|
@@ -114,25 +120,14 @@ At the END, provide a **clear summary table** with the following columns:
 | Recommended Tools | |
 | Expected Outcome (3–6 Months) | |
 
-========================
-  FORMAT RULES
-========================
-• Do Not Merge Sections
-• Use clear headings
-• Use bullet points
-• Keep language simple & professional
-• Do NOT write long paragraphs
-• Make it easy to read in a web UI
-• Space between sections
-• Use markdown formatting
-  Each detail MUST be on a separate new line.
-  DO NOT combine multiple points in a single line.
+Ensure the response is complete and does not stop early.
 """
 
     try:
         response = client.responses.create(
         model="gpt-5-mini",   
-        input=final_prompt
+        input=final_prompt,
+        max_output_tokens=4000
         )
         output_text = response.output_text
 
