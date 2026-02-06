@@ -131,15 +131,15 @@ At the END, provide a **clear summary table** with the following columns:
 
     try:
         response = client.responses.create(
-        model="gpt-5.1",   
+        model="gpt-5-mini",   
         input=final_prompt
         )
         output_text = response.output_text
 
-        if response.output_text:
-            return Response({"plan": response.output_text})
+        if output_text:
+            return Response({"plan": output_text})
         else:
-            return Response({"plan": response.output_text})
+            return Response({"plan": output_text})
 
     except Exception as e:
         error_message = str(e)
