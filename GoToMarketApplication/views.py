@@ -28,7 +28,9 @@ Each section must have short bullet points (5–6 bullets max).
 Do not exceed ~600 words total.
 
 IMPORTANT RULES:
-• First, repeat ALL provided business details exactly in a clearly formatted section.
+• FIRST, repeat ALL the provided business details EXACTLY as given (MANDATORY).
+• The business detail variable/field name MUST be in **bold** (MANDATORY).
+• After EVERY business detail, insert TWO line breaks (press Enter twice).
 • Then provide strategy.
 • No emojis.
 • Use markdown.
