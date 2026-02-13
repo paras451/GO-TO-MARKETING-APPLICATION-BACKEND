@@ -20,6 +20,7 @@ import dj_database_url
 
 import os
 from dotenv import load_dotenv
+from corsheaders.defaults import default_headers, default_methods
 
 load_dotenv()
 
@@ -77,13 +78,16 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
 ]  # for development
 
-CORS_ALLOWED_HEADERS = [
+CORS_ALLOWED_HEADERS = list(default_headers) +  [
     "authorization",
     # "content-type",
     # "accept",
     # "origin",
     # "user-agent",
 ]
+
+CORS_ALLOW_METHODS = list(default_methods)
+CORS_PREFLIGHT_MAX_AGE = 60 * 60
 
 ROOT_URLCONF = "gotomarketappbackend.config.urls"
 
@@ -114,6 +118,7 @@ DATABASES = {
     "default": dj_database_url.config(
         default=os.getenv("DATABASE_URL"),
         conn_max_age=600,
+        conn_health_checks=True,
         ssl_require=True,
     )
 }
