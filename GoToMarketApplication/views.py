@@ -7,6 +7,7 @@ from rest_framework.decorators import permission_classes
 from rest_framework.permissions import AllowAny
 from GoToMarketApplication.serializers import *
 from rest_framework import status
+from django.http import JsonResponse
 
 import os
 
