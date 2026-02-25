@@ -192,3 +192,10 @@ def register_user(request):
         return Response(
             {"error default": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
+
+
+def cron_job(request):
+    if request.method == "GET":
+        # your cron logic here
+        return JsonResponse({"message": "Cron executed successfully"})
+    return JsonResponse({"error": "Method not allowed"}, status=405)
